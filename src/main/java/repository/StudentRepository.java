@@ -18,7 +18,7 @@ public class StudentRepository {
             PreparedStatement ps = connection.prepareStatement("");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
