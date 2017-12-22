@@ -1,5 +1,8 @@
 package webapp;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.extractor.ExcelExtractor;
 
@@ -12,10 +15,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/hello")
 public class Servlet extends HttpServlet {
+
+    private static final String FIRSTLIST = "1 курс 2016-2020";
+    private static final String SECONDLIST = "2 курс 2015-2019";
+    private static final String THIRDLIST = "3 курс 2014-2018";
 
     public String showParsedText() throws Exception {
         InputStream in = new FileInputStream("/Users/AVafin/IdeaProjects/itis_grades/table.xls");
@@ -30,61 +40,72 @@ public class Servlet extends HttpServlet {
         return text;
     }
 
-    public String readFromExcel(String file) throws IOException{
-        HSSFWorkbook myExcelBook = new HSSFWorkbook(new FileInputStream(file));
-        HSSFSheet myExcelSheet = myExcelBook.getSheet("2 курс 2015-2019");
-        HSSFRow row = myExcelSheet.getRow(1);
+    public class Student {
+        public String group;
+        public String name;
+        public Double algem;
+        public Double infka;
+        public Double matan;
+        public Double discmat;
+        public Double lang;
+        public Double history;
+        public Double averagegrade;
+        public Double aisd;
+        // Add constructor, get, set, as needed.
+    }
 
-        String group = row.getCell(1).getStringCellValue();
-        String name = row.getCell(2).getStringCellValue();
-        Double bd = row.getCell(3).getNumericCellValue();
-        System.out.println("group: " + group);
-        System.out.println("name: " + name);
-        System.out.println("bd: " + bd);
-        String[] catsNames = {
-                "Васька",
-                "Кузя",
-                "Барсик",
-                "Мурзик",
-                "Леопольд",
-                "Бегемот",
-                "Рыжик",
-                "Матроскин"
-        };
-        /*if(row.getCell(0).getCellType() == HSSFCell.CELL_TYPE_STRING){
-            String name = row.getCell(0).getStringCellValue();
-            System.out.println("name : " + name);
+    public List<String> readFromExcel(String file) throws IOException {
+        HSSFWorkbook myExcelBook = new HSSFWorkbook(new FileInputStream(file));
+
+        List<String> excelSheets = new ArrayList<>();
+        for (int i = 0; i < myExcelBook.getNumberOfSheets(); i++) {
+            excelSheets.add(myExcelBook.getSheetName(i));
+//            System.out.println("sheets " + i + ": " + excelSheets.get(i) + ". course: " + myExcelBook.getSheetName(i).subSequence(0, 1));
         }
 
-        if(row.getCell(1).getCellType() == HSSFCell.CELL_TYPE_NUMERIC){
-            Date birthdate = row.getCell(1).getDateCellValue();
-            System.out.println("birthdate :" + birthdate);
-        }*/
+
+        HSSFSheet myExcelSheet = myExcelBook.getSheet("2 курс 2015-2019");
+        HSSFRow row = myExcelSheet.getRow(1);
+        int noOfColumns = myExcelSheet.getRow(0).getPhysicalNumberOfCells();
+        String group = row.getCell(1).getStringCellValue();
+        String name = row.getCell(2).getStringCellValue();
+        Double aig = row.getCell(3).getNumericCellValue();
+//        System.out.println("group: " + group);
+//        System.out.println("name: " + name);
+//        System.out.println("aig: " + aig);
+        List<String> colNames = new ArrayList<>();
 
         myExcelBook.close();
-        return name;
+//        System.out.println("Количество колонок: " + noOfColumns);
+
+        for (int col = 2; col < noOfColumns; col++) {
+            String colValue = myExcelSheet.getRow(0).getCell(col).getStringCellValue().toLowerCase();
+            colNames.add(colValue);
+            /*if (colValue.length() > 6) {
+                System.out.println("Длина: " + colValue.substring(0, 6));
+            }*/
+            if (colValue.length() > 6 && !colValue.substring(0, 7).equals("средний")) {
+//                System.out.println(colValue);
+            }
+        }
+        return colNames;
     }
 
     protected void service(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
 
-        try (PrintWriter writer = response.getWriter()) {
-
-            writer.println("<!DOCTYPE html><html>");
-            writer.println("<head>");
-            writer.println("<meta charset=\"UTF-8\" />");
-            writer.println("<title>MyServlet.java:doGet(): Servlet code!</title>");
-            writer.println("</head>");
-            writer.println("<body>");
-
-            writer.println("<h1>This is a simple java servlet.</h1>");
-            writer.println(readFromExcel("/Users/AVafin/IdeaProjects/itis_grades/table.xls"));
-            writer.println("</body>");
-            writer.println("</html>");
-        } catch (Exception e) {
+        Configuration configuration = ConfigSingleton.getConfig(getServletContext());
+        Template tmpl = configuration.getTemplate("hello.ftl");
+        HashMap<String, Object> root = new HashMap<>();
+        root.put("username", "Амир");
+        root.put("colNames", readFromExcel("/Users/AVafin/IdeaProjects/itis_grades/table.xls"));
+        try {
+            tmpl.process(root, response.getWriter());
+        } catch (TemplateException e) {
             e.printStackTrace();
         }
+
     }
 
 }

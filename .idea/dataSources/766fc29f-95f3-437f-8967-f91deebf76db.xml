@@ -12,8 +12,8 @@
     </database>
     <schema id="4" parent="2" name="public">
       <ObjectId>2200</ObjectId>
-      <IntrospectionTimestamp>2017-11-27.17:16:59.801</IntrospectionTimestamp>
-      <IntrospectionStateNumber>571</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2017-12-11.12:15:39.356</IntrospectionTimestamp>
+      <IntrospectionStateNumber>575</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -84,7 +84,7 @@
     </table>
     <table id="19" parent="4" name="subject">
       <ObjectId>16405</ObjectId>
-      <StateNumber>565</StateNumber>
+      <StateNumber>573</StateNumber>
     </table>
     <table id="20" parent="4" name="users">
       <ObjectId>16389</ObjectId>
@@ -92,7 +92,7 @@
     </table>
     <table id="21" parent="4" name="users_groups">
       <ObjectId>16449</ObjectId>
-      <StateNumber>567</StateNumber>
+      <StateNumber>573</StateNumber>
     </table>
     <column id="22" parent="16" name="id">
       <Position>1</Position>
@@ -231,37 +231,23 @@
       <SequenceName>subject_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;subject_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="44" parent="19" name="user_id">
-      <Position>2</Position>
-      <DataType>integer|0</DataType>
-      <StateNumber>564</StateNumber>
-    </column>
-    <column id="45" parent="19" name="name">
+    <column id="44" parent="19" name="name">
       <Position>3</Position>
       <DataType>varchar(30)|0</DataType>
       <StateNumber>564</StateNumber>
     </column>
-    <index id="46" parent="19" name="subject_pkey">
+    <index id="45" parent="19" name="subject_pkey">
       <ObjectId>16409</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="47" parent="19" name="subject_pkey">
+    <key id="46" parent="19" name="subject_pkey">
       <ObjectId>16410</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>subject_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="48" parent="19" name="subject_user_id_fkey">
-      <ObjectId>16411</ObjectId>
-      <ColNames>user_id</ColNames>
-      <RefTableId>16389</RefTableId>
-      <RefColPositions>1</RefColPositions>
-      <RefTableName>users</RefTableName>
-      <RefKeyName>users_pkey</RefKeyName>
-      <RefColNames>id</RefColNames>
-    </foreign-key>
-    <column id="49" parent="20" name="id">
+    <column id="47" parent="20" name="id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -269,43 +255,43 @@
       <SequenceName>users_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;users_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="50" parent="20" name="role">
+    <column id="48" parent="20" name="role">
       <Position>2</Position>
       <DataType>integer|0</DataType>
       <StateNumber>562</StateNumber>
     </column>
-    <column id="51" parent="20" name="name">
+    <column id="49" parent="20" name="name">
       <Position>3</Position>
       <DataType>varchar(30)|0</DataType>
       <StateNumber>562</StateNumber>
     </column>
-    <column id="52" parent="20" name="surname">
+    <column id="50" parent="20" name="surname">
       <Position>4</Position>
       <DataType>varchar(40)|0</DataType>
       <StateNumber>562</StateNumber>
     </column>
-    <column id="53" parent="20" name="email">
+    <column id="51" parent="20" name="email">
       <Position>5</Position>
       <DataType>varchar(40)|0</DataType>
       <StateNumber>562</StateNumber>
     </column>
-    <column id="54" parent="20" name="password">
+    <column id="52" parent="20" name="password">
       <Position>6</Position>
       <DataType>varchar(40)|0</DataType>
       <StateNumber>562</StateNumber>
     </column>
-    <index id="55" parent="20" name="users_pkey">
+    <index id="53" parent="20" name="users_pkey">
       <ObjectId>16393</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="56" parent="20" name="users_pkey">
+    <key id="54" parent="20" name="users_pkey">
       <ObjectId>16394</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="57" parent="21" name="id">
+    <column id="55" parent="21" name="id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -313,28 +299,33 @@
       <SequenceName>users_groups_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;users_groups_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="58" parent="21" name="students_group_id">
+    <column id="56" parent="21" name="students_group_id">
       <Position>2</Position>
       <DataType>integer|0</DataType>
       <StateNumber>567</StateNumber>
     </column>
-    <column id="59" parent="21" name="user_id">
+    <column id="57" parent="21" name="user_id">
       <Position>3</Position>
       <DataType>integer|0</DataType>
       <StateNumber>567</StateNumber>
     </column>
-    <index id="60" parent="21" name="users_groups_pkey">
+    <column id="58" parent="21" name="subject_id">
+      <Position>4</Position>
+      <DataType>integer|0</DataType>
+      <StateNumber>572</StateNumber>
+    </column>
+    <index id="59" parent="21" name="users_groups_pkey">
       <ObjectId>16453</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="61" parent="21" name="users_groups_pkey">
+    <key id="60" parent="21" name="users_groups_pkey">
       <ObjectId>16454</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>users_groups_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="62" parent="21" name="users_groups_students_group_id_fkey">
+    <foreign-key id="61" parent="21" name="users_groups_students_group_id_fkey">
       <ObjectId>16455</ObjectId>
       <ColNames>students_group_id</ColNames>
       <RefTableId>16436</RefTableId>
@@ -343,13 +334,22 @@
       <RefKeyName>students_group_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="63" parent="21" name="users_groups_user_id_fkey">
+    <foreign-key id="62" parent="21" name="users_groups_user_id_fkey">
       <ObjectId>16460</ObjectId>
       <ColNames>user_id</ColNames>
       <RefTableId>16389</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>users</RefTableName>
       <RefKeyName>users_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="63" parent="21" name="users_groups_subject_id_fkey">
+      <ObjectId>24579</ObjectId>
+      <ColNames>subject_id</ColNames>
+      <RefTableId>16405</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>subject</RefTableName>
+      <RefKeyName>subject_pkey</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
   </database-model>

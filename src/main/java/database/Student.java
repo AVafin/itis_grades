@@ -1,13 +1,12 @@
 package database;
 
 public class Student {
+
+
     private int id;
     private String name;
     private int budget;
     private String group;
-
-    public Student() {
-    }
 
     public Student(int id, String name, int budget, String group) {
         this.id = id;
